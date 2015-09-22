@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html ms-controller="app">
+  <head>
+    <meta charset="UTF-8">
+    <title>路由啊</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    
+</head>
+  
+  <body style="padding:10px 15px;">
+      <div ms-view>
+         <p>无名视图</p>
+      </div>
+      
+      <div ms-view='v'>
+         <p>视图V</p>
+      </div>
+      
+      <div>
+        <p><a href="#!/">home</a></p>
+        <p><a href="#!/about">about</a></p>
+        <p><a href="#!/user">home.user</a></p>
+        <p><a href="#!/user/1">home.user.detail_1</a></p>
+      </div>
+      
+  </body>
+
+<script type="text/javascript" src="avalon.js"></script>
+<script type="text/javascript">
+        require(["mmRouter/mmState","dropdownlist/avalon.dropdownlist"],function(){
+            
+            var data = [
+                {
+                    value: "default",
+                    label: "default"
+                },
+                {
+                    value: "name 1",
+                    label: "name 1"
+                }, {
+                    value: "name 2",
+                    label: "name 2"
+                }, {
+                    value: "name 3",
+                    label: "name 3"
+                }, {
+                    value: "name 4",
+                    label: "name 4"
+                }, {
+                    value: "name 5",
+                    label: "name 5"
+                }
+            ]
+            var dvm = null;
+            // root ctrl
+            avalon.define("app",function(vm){
+                vm.$skipArray = ['dropdownlist']
+                vm.dropdownlist = {
+                   getRealTimeData: function(search, dropdownlist) {
+                       dvm = dropdownlist;
+                        setTimeout(function() {
+                            dropdownlist.render(data)
+                        }, 100)
+                    },
+                    data: [
+                        {
+                            value: "default",
+                            label: "default"
+                        }
+                    ],
+                    realTimeData: true
+                   
+                }
+                 vm.vv = "default";
+                 vm.reload = function(){
+                    vm.vv="default";
+                 }
+            });
+            // route config
+            avalon.state("home", {
+                url: "/",
+                abstract: true,
+                views: {
+                    "": {
+                        template: "当前state='home', 当前view='' "
+                    }
+                }
+            })
+            .state("about", {
+                url: "/about",
+                views: {
+                    "": {
+                        template: "当前state='about', 当前view='' "
+                    }
+                }
+            })
+            .state("home.users", {
+                url: "user",
+                views: {
+                    "@": {
+                        template: "<p>当前state='home.users', 当前view=''</p>" +
+                                  "<p ms-view='ss'>" + 
+                                        "<div>" + 
+                                            "<select ms-widget='dropdownlist, a' ms-duplex='vv'></select>" + 
+                                            "<p><button ms-click='reload'>reload</button></p>" + 
+                                            "<label >{{vv}}</button>" + 
+                                       " </div>" + 
+                                  "</p> "
+                    },
+                    "v@": {
+                        template: "vvvvvvvvvvvv"
+                    },
+                }
+            })
+            .state("home.users.detail", {
+                url: "/:id",
+                views: {
+                    "ss": {
+                        template: "user detail ok. <a href='#!/user/2'>home.user.detail_2</a> "
+                    },
+                    "v@": {
+                        template: "999999999 <a href='#!/user/b/boom'><b>颠覆</b></a>"
+                    }
+                },
+                
+                onEnter: function(){
+                    var p = new Promise(function(rs, rj){
+                        console.log(arguments)
+                        setTimeout(function(){
+                            rs(true)
+                        },300)
+                    })
+                    
+                    return p
+                  
+                },
+                
+                /**
+                onEnter: function(rs ,rj){
+                    console.log(arguments)
+                    setTimeout(function(){
+                        rs(true)
+                    },300)
+                    return false
+                }
+                */
+            })
+            .state("home.users.boom", {
+                url: "/b/boom",
+                views: { 
+                    "@": {
+                        template: "颠覆吧"
+                    }
+                }
+            })
+            
+            //启动路由
+            avalon.history.start({
+                basepath: "/"
+            })
+            
+            avalon.scan();
+        })
+  </script>
+</html>
