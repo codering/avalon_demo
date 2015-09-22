@@ -2,7 +2,7 @@
 mmrouter + dropdown 遇到的问题
 * 重现步骤
 
-1. 保证当前页也整页刷新过的
+1. 保证当前页是整页刷新过的
 2. 点击"home.user"
 3. 再点击"about"
 4. 再点击"home.user"
