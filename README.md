@@ -1,6 +1,6 @@
 # avalon_demo
 mmrouter + dropdown 遇到的问题
-重现步骤
+* 重现步骤
 
 1. 点击"home.user"
 2. 再点击"about"
