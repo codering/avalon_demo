@@ -12,6 +12,6 @@ mmrouter + dropdown 遇到的问题
 会看到console控制台出现错误"Uncaught TypeError: Cannot read property '$events' of null"
 -------------
 
-如果刷新整个页面后，只执行上面的步骤2、5, 则不论路由怎么切换，下拉框选择都不会有问题。
+如果刷新整个页面后，先执行上面的步骤2、5, 则不论路由怎么切换，下拉框选择都不会有问题。
 
 
