@@ -179,7 +179,7 @@ define(["avalon",
                             }
                             if ((onChange && onChange.call(element, n, o, vmodel, valueStateKeep) !== false) || !onChange) {
                                 if (duplexModel) {
-                                    duplexModel[2][duplexModel[0]] = n
+                                    duplexModel[1][duplexModel[0]] = n
                                     element.value = n
                                 }
                                 vmodel.currentOption = setLabelTitle(n);
@@ -534,7 +534,7 @@ define(["avalon",
              */
             vm.val = function(newValue) {
                 if (typeof newValue !== "undefined") {
-                    if (vmodel.multiple && avalon.type(newValue) !== "array") {
+                    if (avalon.type(newValue) !== "array") {
                         newValue = [newValue];
                     }
                     vmodel.value = newValue;
@@ -714,6 +714,7 @@ define(["avalon",
             if(!vmodel.multiple && avalon.type(value)==="array") {
                 value = value[0];
             }
+
             var option = vmodel.data.$model.filter(function(item) {
                 return item.value === value;
             });
